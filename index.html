@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Follower Analyzer</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Follower Analyzer</h1>
+        <p>Upload your <code>following.json</code> and <code>followers_1.json</code> files to analyze:</p>
+        <div class="upload-section">
+            <label for="following-file">Following JSON:</label>
+            <input type="file" id="following-file" accept=".json"><br><br>
+            <label for="followers-file">Followers JSON:</label>
+            <input type="file" id="followers-file" accept=".json"><br><br>
+            <button id="analyze-btn">Analyze</button>
+        </div>
+        <div id="results" style="display: none;">
+            <h2>Results</h2>
+            <p id="total-following"></p>
+            <p id="total-followers"></p>
+            <h3>People you're following who are not following you back:</h3>
+            <ul id="not-following-back"></ul>
+            <h3>People following you who you're not following back:</h3>
+            <ul id="not-followed-back"></ul>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

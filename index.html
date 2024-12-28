@@ -9,21 +9,19 @@
 <body>
     <div class="container">
         <h1>Follower Analyzer</h1>
-        <p>Upload your <code>following.json</code> and <code>followers_1.json</code> files to analyze:</p>
+        <p>Upload a folder containing <code>following.json</code> and <code>followers_1.json</code>:</p>
         <div class="upload-section">
-            <label for="following-file">Following JSON:</label>
-            <input type="file" id="following-file" accept=".json"><br><br>
-            <label for="followers-file">Followers JSON:</label>
-            <input type="file" id="followers-file" accept=".json"><br><br>
+            <label for="folder-upload">Select folder:</label>
+            <input type="file" id="folder-upload" webkitdirectory><br><br>
             <button id="analyze-btn">Analyze</button>
         </div>
         <div id="results" style="display: none;">
             <h2>Results</h2>
             <p id="total-following"></p>
             <p id="total-followers"></p>
-            <h3>People you're following who are not following you back:</h3>
+            <h3>People you're following who are not following you back (<span id="count-not-following-back">0</span>):</h3>
             <ul id="not-following-back"></ul>
-            <h3>People following you who you're not following back:</h3>
+            <h3>People following you who you're not following back (<span id="count-not-followed-back">0</span>):</h3>
             <ul id="not-followed-back"></ul>
         </div>
     </div>

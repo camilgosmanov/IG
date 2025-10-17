@@ -1,4 +1,4 @@
-<script>
+
 document.getElementById("analyze-btn").addEventListener("click", function () {
     const folderInput = document.getElementById("folder-upload").files;
 
@@ -89,4 +89,4 @@ function extractUsernames(data, type) {
 
     return usernames;
 }
-</script>
+

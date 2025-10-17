@@ -1,3 +1,4 @@
+<script>
 document.getElementById("analyze-btn").addEventListener("click", function () {
     const folderInput = document.getElementById("folder-upload").files;
 
@@ -16,9 +17,7 @@ document.getElementById("analyze-btn").addEventListener("click", function () {
     });
 
     if (!followingFile || !followersFile) {
-        alert(
-            "The folder must contain both 'following.json' and 'followers_1.json' files!"
-        );
+        alert("The folder must contain both 'following.json' and 'followers_1.json' files!");
         return;
     }
 
@@ -33,10 +32,10 @@ document.getElementById("analyze-btn").addEventListener("click", function () {
 
     Promise.all([loadFile(followingFile), loadFile(followersFile)]).then(
         ([followingData, followersData]) => {
-            const followingUsernames = extractUsernames(
-                followingData["relationships_following"]
-            );
-            const followerUsernames = extractUsernames(followersData);
+            // following.json has "relationships_following" key
+            const followingList = followingData["relationships_following"] || followingData;
+            const followingUsernames = extractUsernames(followingList, "following");
+            const followerUsernames = extractUsernames(followersData, "followers");
 
             const notFollowingBack = [...followingUsernames].filter(
                 (user) => !followerUsernames.has(user)
@@ -54,34 +53,40 @@ document.getElementById("analyze-btn").addEventListener("click", function () {
             // Update not following back count
             document.getElementById("count-not-following-back").textContent =
                 notFollowingBack.length;
-            const notFollowingBackList = document.getElementById(
-                "not-following-back"
-            );
-            notFollowingBackList.innerHTML = notFollowingBack
-                .map((user) => `<li>${user}</li>`)
-                .join("");
+            document.getElementById("not-following-back").innerHTML =
+                notFollowingBack.map((user) => `<li>${user}</li>`).join("");
 
             // Update not followed back count
             document.getElementById("count-not-followed-back").textContent =
                 notFollowedBack.length;
-            const notFollowedBackList = document.getElementById(
-                "not-followed-back"
-            );
-            notFollowedBackList.innerHTML = notFollowedBack
-                .map((user) => `<li>${user}</li>`)
-                .join("");
+            document.getElementById("not-followed-back").innerHTML =
+                notFollowedBack.map((user) => `<li>${user}</li>`).join("");
 
             document.getElementById("results").style.display = "block";
         }
     ).catch((err) => alert(err));
 });
 
-function extractUsernames(data) {
+// Adjusted to handle both formats (followers vs following)
+function extractUsernames(data, type) {
     const usernames = new Set();
-    data.forEach((entry) =>
-        entry.string_list_data.forEach((user) =>
-            usernames.add(user.value)
-        )
-    );
+
+    data.forEach((entry) => {
+        if (type === "following") {
+            // In following.json, username is in entry.title
+            if (entry.title) usernames.add(entry.title);
+        } else {
+            // In followers_1.json, username is in entry.string_list_data[0].value
+            if (
+                entry.string_list_data &&
+                entry.string_list_data.length > 0 &&
+                entry.string_list_data[0].value
+            ) {
+                usernames.add(entry.string_list_data[0].value);
+            }
+        }
+    });
+
     return usernames;
 }
+</script>

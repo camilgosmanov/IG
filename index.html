@@ -3,26 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Follower Analyzer</title>
+    <title>Instagram Account Analyzer</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
-        <h1>Follower Analyzer</h1>
-        <p>Upload a folder containing <code>following.json</code> and <code>followers_1.json</code>:</p>
+        <h1>Instagram Account Analyzer</h1>
+        <p>Upload folders containing <code>following.json</code> and <code>followers_1.json</code>:</p>
         <div class="upload-section">
-            <label for="folder-upload">Select folder:</label>
-            <input type="file" id="folder-upload" webkitdirectory><br><br>
+            <h3>First Folder (Newer)</h3>
+            <label for="folder-upload-1">Select folder:</label>
+            <input type="file" id="folder-upload-1" webkitdirectory><br><br>
+            <h3>Second Folder (Older - Optional for comparison)</h3>
+            <label for="folder-upload-2">Select folder:</label>
+            <input type="file" id="folder-upload-2" webkitdirectory><br><br>
             <button id="analyze-btn">Analyze</button>
         </div>
         <div id="results" style="display: none;">
-            <h2>Results</h2>
+            <h2>Current Status (First Folder)</h2>
             <p id="total-following"></p>
             <p id="total-followers"></p>
             <h3>People you're following who are not following you back (<span id="count-not-following-back">0</span>):</h3>
             <ul id="not-following-back"></ul>
             <h3>People following you who you're not following back (<span id="count-not-followed-back">0</span>):</h3>
             <ul id="not-followed-back"></ul>
+        </div>
+        <div id="comparison-results" style="display: none;">
+            <h2>Comparison Results</h2>
+            <h3>New Followers (<span id="count-new-followers">0</span>):</h3>
+            <ul id="new-followers"></ul>
+            <h3>Lost Followers (<span id="count-lost-followers">0</span>):</h3>
+            <ul id="lost-followers"></ul>
+            <h3>Newly Following (<span id="count-new-following">0</span>):</h3>
+            <ul id="new-following"></ul>
+            <h3>Unfollowed (<span id="count-unfollowed">0</span>):</h3>
+            <ul id="unfollowed"></ul>
         </div>
     </div>
     <script src="script.js"></script>
